@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tradutor de Texto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #tradutor {
+      width: 50%;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #tradutor label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    #tradutor input[type="text"] {
+      width: 100%;
+      height: 40px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    #tradutor button[type="submit"] {
+      width: 100%;
+      height: 40px;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #tradutor button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <div id="tradutor">
+    <h2>Tradutor de Texto</h2>
+    <form id="form-tradutor">
+      <label for="texto-inglês">Texto em inglês:</label>
+      <input type="text" id="texto-inglês" name="texto-inglês">
+      <button type="submit">Traduzir</button>
+      <p id="traducao"></p>
+    </form>
+  </div>
+
+  <script>
+    const formTradutor = document.getElementById('form-tradutor');
+    const textoInglês = document.getElementById('texto-inglês');
+    const traducao = document.getElementById('traducao');
+
+    formTradutor.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const texto = textoInglês.value;
+      traduzirTexto(texto);
+    });
+
+    async function traduzirTexto(texto) {
+      const resposta = await fetch(`https://api.mymemory.translated.net/get?q=${texto}&langpair=en|pt`);
+      const dados = await resposta.json();
+      const traducaoTexto = dados.responseData.translatedText;
+      traducao.innerText = `Tradução: ${traducaoTexto}`;
+    }
+  </script>
+</body>
+</html>
