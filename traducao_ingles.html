@@ -47,19 +47,29 @@
       <label for="texto-inglês">Texto em inglês:</label>
       <input type="text" id="texto-inglês" name="texto-inglês">
       <button type="submit">Traduzir</button>
+      <button id="limpar">Limpar</button>
       <p id="traducao"></p>
     </form>
   </div>
-
   <script>
     const formTradutor = document.getElementById('form-tradutor');
     const textoInglês = document.getElementById('texto-inglês');
     const traducao = document.getElementById('traducao');
+    const limpar = document.getElementById('limpar');
 
     formTradutor.addEventListener('submit', (e) => {
       e.preventDefault();
-      const texto = textoInglês.value;
-      traduzirTexto(texto);
+      const texto = textoInglês.value.trim();
+      if (texto !== '') {
+        traduzirTexto(texto);
+      } else {
+        alert('Por favor, insira um texto para traduzir.');
+      }
+    });
+
+    limpar.addEventListener('click', () => {
+      textoInglês.value = '';
+      traducao.innerText = '';
     });
 
     async function traduzirTexto(texto) {
